@@ -1,0 +1,15 @@
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.csproj.AssemblyReference.cache
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4_Miniface_Changer.mainForm.resources
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4_Miniface_Changer.Properties.Resources.resources
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.csproj.GenerateResource.cache
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.csproj.CoreCompileInputs.cache
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\FIFA4-Miniface-Changer.exe.config
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\FIFA4-Miniface-Changer.exe
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\FIFA4-Miniface-Changer.pdb
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\MetroFramework.dll
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\MetroFramework.Fonts.dll
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.csproj.CopyComplete
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.exe
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Debug\FIFA4-Miniface-Changer.pdb
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\Newtonsoft.Json.dll
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\bin\Debug\Newtonsoft.Json.xml
