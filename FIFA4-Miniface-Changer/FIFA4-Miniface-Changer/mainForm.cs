@@ -27,6 +27,8 @@ namespace FIFA4_Miniface_Changer
         List<string> searchPlayerIconList = new List<string>();
 
         bool ifSearch = false;
+        bool before_Check = false;
+        bool after_Check = false;
 
         public mainForm()
         {
@@ -205,7 +207,7 @@ namespace FIFA4_Miniface_Changer
 
         private void listbox_Character_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(searchPlayerCodeList[listbox_Character.SelectedIndex]);
+
         }
 
         private void button_changeLocation_Click(object sender, EventArgs e)
@@ -224,124 +226,171 @@ namespace FIFA4_Miniface_Changer
 
         private void button_Before_Click(object sender, EventArgs e)
         {
-            List<string> playersName = playerNameList;
-            List<string> playersCode = playerCodeList;
-            List<string> playersIcon = playerIconList;
-
-            if (ifSearch == true)
+            if(listbox_Character.SelectedIndex == -1)
             {
-                playersName = searchPlayerNameList;
-                playersCode = searchPlayerCodeList;
-                playersIcon = searchPlayerIconList;
+                MessageBox.Show("선수를 선택해주세요.", "Error");
             }
-
-            try
+            else
             {
-                WebClient wc = new WebClient();
-                byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
-                tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
+                List<string> playersName = playerNameList;
+                List<string> playersCode = playerCodeList;
+                List<string> playersIcon = playerIconList;
 
-                fileLocation = "playersAction";
-                fileCode = playersCode[listbox_Character.SelectedIndex];
-            }
-            catch (Exception ex)
-            {
+                if (ifSearch == true)
+                {
+                    playersName = searchPlayerNameList;
+                    playersCode = searchPlayerCodeList;
+                    playersIcon = searchPlayerIconList;
+                }
+
                 try
                 {
                     WebClient wc = new WebClient();
-                    byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
-                    tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
+                    byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
+                    tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
 
-                    fileLocation = "players";
+                    fileLocation = "playersAction";
                     fileCode = playersCode[listbox_Character.SelectedIndex];
                 }
-                catch (Exception ex2)
+                catch (Exception ex)
                 {
                     try
                     {
                         WebClient wc = new WebClient();
-                        byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png");
-                        tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png";
+                        byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
+                        tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
 
                         fileLocation = "players";
-                        fileCode = int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)).ToString();
+                        fileCode = playersCode[listbox_Character.SelectedIndex];
                     }
-                    catch (Exception ex3)
+                    catch (Exception ex2)
                     {
-                        tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/not_found.png";
+                        try
+                        {
+                            WebClient wc = new WebClient();
+                            byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png");
+                            tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png";
 
-                        fileLocation = "players";
-                        fileCode = "not_found";
+                            fileLocation = "players";
+                            fileCode = int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)).ToString();
+                        }
+                        catch (Exception ex3)
+                        {
+                            tempurl = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/not_found.png";
 
-                        MessageBox.Show("현재 \"" + playersName[listbox_Character.SelectedIndex].Split(']')[1].TrimEnd().TrimStart() + "\" 선수는 미페가 없습니다.\n변경시 모든 미페가 없는 선수는 현재 미페로 적용됩니다.");
+                            fileLocation = "players";
+                            fileCode = "not_found";
+
+                            MessageBox.Show("현재 \"" + playersName[listbox_Character.SelectedIndex].Split(']')[1].TrimEnd().TrimStart() + "\" 선수는 미페가 없습니다.\n변경시 모든 미페가 없는 선수는 현재 미페로 적용됩니다.");
+                        }
                     }
                 }
-            }
 
-            string fileLocations = check_local_Image(fileLocation, fileCode);
-            Console.WriteLine(fileLocations);
-            if (fileLocations != null)
-            {
-                //파일 있음
-                picturebox_Before.ImageLocation = fileLocations;
-            }
-            else
-            {
-                picturebox_Before.ImageLocation = tempurl;
-            }
+                string fileLocations = check_local_Image(fileLocation, fileCode);
+                if (fileLocations != null)
+                {
+                    //파일 있음
+                    picturebox_Before.ImageLocation = fileLocations;
+                }
+                else
+                {
+                    picturebox_Before.ImageLocation = tempurl;
+                }
 
-            picturebox_Season.ImageLocation = playersIcon[listbox_Character.SelectedIndex];
-            label_Name.Text = playersName[listbox_Character.SelectedIndex].Split(']')[1].TrimEnd();
+                before_Check = true;
+                picturebox_Season.ImageLocation = playersIcon[listbox_Character.SelectedIndex];
+                label_Name.Text = playersName[listbox_Character.SelectedIndex].Split(']')[1].TrimEnd();
+            }
         }
 
         private void button_After_Click(object sender, EventArgs e)
         {
-            List<string> playersName = playerNameList;
-            List<string> playersCode = playerCodeList;
-            List<string> playersIcon = playerIconList;
-
-            if (ifSearch == true)
+            if(listbox_Character.SelectedIndex == -1)
             {
-                playersName = searchPlayerNameList;
-                playersCode = searchPlayerCodeList;
-                playersIcon = searchPlayerIconList;
+                MessageBox.Show("선수를 선택해주세요.", "Error");
             }
+            else
+            {
+                List<string> playersName = playerNameList;
+                List<string> playersCode = playerCodeList;
+                List<string> playersIcon = playerIconList;
 
-            try
-            {
-                WebClient wc = new WebClient();
-                byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
-                picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
-            }
-            catch (Exception ex)
-            {
+                if (ifSearch == true)
+                {
+                    playersName = searchPlayerNameList;
+                    playersCode = searchPlayerCodeList;
+                    playersIcon = searchPlayerIconList;
+                }
+
                 try
                 {
                     WebClient wc = new WebClient();
-                    byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
-                    picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
+                    byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
+                    picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
                 }
-                catch (Exception ex2)
+                catch (Exception ex)
                 {
                     try
                     {
                         WebClient wc = new WebClient();
-                        byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png");
-                        picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png";
+                        byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png");
+                        picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playersCode[listbox_Character.SelectedIndex] + ".png";
                     }
-                    catch (Exception ex3)
+                    catch (Exception ex2)
                     {
-                        picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/not_found.png";
+                        try
+                        {
+                            WebClient wc = new WebClient();
+                            byte[] bytes = wc.DownloadData("https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png");
+                            picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + int.Parse(playersCode[listbox_Character.SelectedIndex].Substring(3)) + ".png";
+                        }
+                        catch (Exception ex3)
+                        {
+                            picturebox_After.ImageLocation = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/not_found.png";
+                        }
                     }
                 }
+                label_After_Name.Text = playersName[listbox_Character.SelectedIndex].Split(']')[1].TrimEnd().TrimStart();
+                after_Check = true;
             }
         }
 
         private void button_Change_Click(object sender, EventArgs e)
         {
-            picturebox_After.Image.Save(FIFA4_Location + "\\_cache\\live\\externalAssets\\common\\" + fileLocation + "\\p" + fileCode + ".png", System.Drawing.Imaging.ImageFormat.Png);
+            if(before_Check == true && after_Check == true)
+            {
+                try
+                {
+                    picturebox_After.Image.Save(FIFA4_Location + "\\_cache\\live\\externalAssets\\common\\" + fileLocation + "\\p" + fileCode + ".png", System.Drawing.Imaging.ImageFormat.Png);
 
-            picturebox_Before.ImageLocation = FIFA4_Location + "\\_cache\\live\\externalAssets\\common\\" + fileLocation + "\\p" + fileCode + ".png";
+                    picturebox_Before.ImageLocation = FIFA4_Location + "\\_cache\\live\\externalAssets\\common\\" + fileLocation + "\\p" + fileCode + ".png";
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("FIFA ONLINE 4 폴더를 찾을수 없습니다.\n경로를 다시 확인해주세요.", "Error");
+                }
+            }
+            else if(before_Check == false)
+            {
+                MessageBox.Show("변경 전 미페를 선택해주세요.", "Error");
+            }
+            else if (after_Check == false)
+            {
+                MessageBox.Show("변경 후 전 미페를 선택해주세요.", "Error");
+            }
+        }
+
+        private void button_After_Open_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "이미지 파일 (*.png, *.jpg, *.bmp) | *.png; *.jpg; *.bmp;";
+
+            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                picturebox_After.ImageLocation = openFileDialog.FileName;
+                label_After_Name.Text = openFileDialog.SafeFileName;
+                after_Check = true;
+            }
         }
     }
 }

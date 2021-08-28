@@ -45,6 +45,7 @@ namespace FIFA4_Miniface_Changer
             this.label_Author = new MetroFramework.Controls.MetroLabel();
             this.label_Name = new MetroFramework.Controls.MetroLabel();
             this.picturebox_Season = new System.Windows.Forms.PictureBox();
+            this.label_After_Name = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Before)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).BeginInit();
@@ -116,7 +117,7 @@ namespace FIFA4_Miniface_Changer
             // label_Before
             // 
             this.label_Before.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Before.Location = new System.Drawing.Point(373, 91);
+            this.label_Before.Location = new System.Drawing.Point(373, 97);
             this.label_Before.Name = "label_Before";
             this.label_Before.Size = new System.Drawing.Size(128, 23);
             this.label_Before.TabIndex = 7;
@@ -126,7 +127,7 @@ namespace FIFA4_Miniface_Changer
             // label_After
             // 
             this.label_After.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_After.Location = new System.Drawing.Point(588, 91);
+            this.label_After.Location = new System.Drawing.Point(588, 97);
             this.label_After.Name = "label_After";
             this.label_After.Size = new System.Drawing.Size(128, 23);
             this.label_After.TabIndex = 10;
@@ -167,6 +168,7 @@ namespace FIFA4_Miniface_Changer
             this.button_After_Open.Size = new System.Drawing.Size(128, 23);
             this.button_After_Open.TabIndex = 12;
             this.button_After_Open.Text = "미페 블러오기";
+            this.button_After_Open.Click += new System.EventHandler(this.button_After_Open_Click);
             // 
             // label_Author
             // 
@@ -182,7 +184,7 @@ namespace FIFA4_Miniface_Changer
             // label_Name
             // 
             this.label_Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Name.Location = new System.Drawing.Point(409, 117);
+            this.label_Name.Location = new System.Drawing.Point(409, 123);
             this.label_Name.Name = "label_Name";
             this.label_Name.Size = new System.Drawing.Size(92, 24);
             this.label_Name.TabIndex = 14;
@@ -191,17 +193,27 @@ namespace FIFA4_Miniface_Changer
             // picturebox_Season
             // 
             this.picturebox_Season.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picturebox_Season.Location = new System.Drawing.Point(373, 117);
+            this.picturebox_Season.Location = new System.Drawing.Point(373, 123);
             this.picturebox_Season.Name = "picturebox_Season";
             this.picturebox_Season.Size = new System.Drawing.Size(30, 24);
             this.picturebox_Season.TabIndex = 15;
             this.picturebox_Season.TabStop = false;
+            // 
+            // label_After_Name
+            // 
+            this.label_After_Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_After_Name.Location = new System.Drawing.Point(588, 123);
+            this.label_After_Name.Name = "label_After_Name";
+            this.label_After_Name.Size = new System.Drawing.Size(128, 24);
+            this.label_After_Name.TabIndex = 16;
+            this.label_After_Name.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 382);
+            this.Controls.Add(this.label_After_Name);
             this.Controls.Add(this.picturebox_Season);
             this.Controls.Add(this.label_Name);
             this.Controls.Add(this.label_Author);
@@ -249,5 +261,6 @@ namespace FIFA4_Miniface_Changer
         private MetroFramework.Controls.MetroLabel label_Author;
         private MetroFramework.Controls.MetroLabel label_Name;
         private System.Windows.Forms.PictureBox picturebox_Season;
+        private MetroFramework.Controls.MetroLabel label_After_Name;
     }
 }
