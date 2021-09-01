@@ -11,11 +11,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
+using AdsJumboWinForm;
 
 namespace FIFA4_Miniface_Changer
 {
     public partial class mainForm : MetroForm
     {
+        [DllImport("kernel32")]
+        private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
+
+        private readonly AdsJumboWinForm.BannerAds bannerAds = new BannerAds();
+
         string FIFA4_Location = "C:\\Nexon\\EA SPORTS(TM) FIFA ONLINE 4";
 
         List<string> playerNameList = new List<string>();
@@ -26,13 +35,30 @@ namespace FIFA4_Miniface_Changer
         List<string> searchPlayerCodeList = new List<string>();
         List<string> searchPlayerIconList = new List<string>();
 
+        List<string> miniface_No = new List<string>();
+        List<string> miniface_Name = new List<string>();
+        List<string> miniface_Location = new List<string>();
+
         bool ifSearch = false;
         bool before_Check = false;
         bool after_Check = false;
+        bool miniFace_Save = false;
 
         public mainForm()
         {
             InitializeComponent();
+        }
+
+        public string getVersion()
+        {
+            //Get Data
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/MoonByul-E/FIFA4-Miniface-Changer/main/Version");
+            HttpWebResponse Response = (HttpWebResponse)Request.GetResponse();
+
+            //Encoding
+            Stream Stream = Response.GetResponseStream();
+            StreamReader Reader = new StreamReader(Stream, Encoding.UTF8);
+            return Reader.ReadToEnd();
         }
 
         public JArray getAPI(string URL)
@@ -88,12 +114,32 @@ namespace FIFA4_Miniface_Changer
             listbox_Character.EndUpdate();
             searchPlayerNameList = new List<string>();
             searchPlayerCodeList = new List<string>();
+            searchPlayerIconList = new List<string>();
             ifSearch = false;
+            listbox_Character.SelectedIndex = 0;
         }
 
         private void mainForm_Load(object sender, EventArgs e)
         {
+            StringBuilder fileLocation = new StringBuilder();
+            GetPrivateProfileString("FILE", "LOCATION", FIFA4_Location, fileLocation, 1000, Application.StartupPath + @"\Setting.ini");
+            FIFA4_Location = fileLocation.ToString();
+            this.Size = new Size(900, 414);
             label_nowLocation.Text = "현재 위치: " + FIFA4_Location;
+            FileInfo check_FIFA4EXE = new FileInfo(FIFA4_Location + "\\fifa4zf.exe");
+
+            //있을때
+            if (check_FIFA4EXE.Exists)
+            {
+                label_checkFIFA4.Text = "현재 경로 확인: FIFA4 파일 확인.";
+                label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Green;
+            }
+            else
+            {
+                label_checkFIFA4.Text = "현재 경로 확인: FIFA4 파일 없음.";
+                label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Red;
+            }
+
             try
             {
                 JArray seasonList = getAPI("https://static.api.nexon.co.kr/fifaonline4/latest/seasonid.json");
@@ -129,6 +175,17 @@ namespace FIFA4_Miniface_Changer
                 }
 
                 load_ListBox();
+                string nowVersion = Properties.Settings.Default.nowVersion;
+                if (getVersion().TrimEnd() != nowVersion)
+                {
+                    updateForm UpdateForm = new updateForm();
+                    UpdateForm.ShowDialog();
+                }
+
+                Controls.Add(bannerAds);
+                bannerAds.Location = new Point(740, 30);
+                bannerAds.ShowAd(160, 600, "bamd4f0pc0ns");
+                bannerAds.Size = new Size(160, 350);
             }
             catch(Exception ex)
             {
@@ -207,7 +264,43 @@ namespace FIFA4_Miniface_Changer
 
         private void listbox_Character_SelectedIndexChanged(object sender, EventArgs e)
         {
+            List<string> playersName = playerNameList;
+            List<string> playersCode = playerCodeList;
+            List<string> playersIcon = playerIconList;
 
+            miniface_No = new List<string>();
+            miniface_Name = new List<string>();
+            miniface_Location = new List<string>();
+
+            if (ifSearch == true)
+            {
+                playersName = searchPlayerNameList;
+                playersCode = searchPlayerCodeList;
+                playersIcon = searchPlayerIconList;
+            }
+
+            if (miniFace_Save == true)
+            {
+                label_MiniFace_Name.Text = listbox_Character.Items[listbox_Character.SelectedIndex].ToString();
+                JArray board = getAPI("http://127.0.0.1/board/" + playersCode[listbox_Character.SelectedIndex]);
+                if(board[0]["No"].ToString() == "-1")
+                {
+                    listbox_MiniFace.Items.Add("등록된 미니 페이스가 없습니다.");
+                }
+                else
+                {
+                    listbox_MiniFace.BeginUpdate();
+                    for (int i = 0; i < board.Count; i++)
+                    {
+                        Console.WriteLine(board[i]["Title"]);
+                        miniface_No.Add(board[i]["No"].ToString());
+                        miniface_Name.Add(board[i]["Title"].ToString());
+                        miniface_Location.Add(board[i]["fileLocation"].ToString());
+                        listbox_MiniFace.Items.Add("[No. " + board[i]["No"].ToString() + "] " + board[i]["Title"].ToString());
+                    }
+                    listbox_MiniFace.EndUpdate();
+                }
+            }
         }
 
         private void button_changeLocation_Click(object sender, EventArgs e)
@@ -216,7 +309,21 @@ namespace FIFA4_Miniface_Changer
             if(folder.ShowDialog() == DialogResult.OK)
             {
                 FIFA4_Location = folder.SelectedPath;
+                WritePrivateProfileString("FILE", "LOCATION", FIFA4_Location, Application.StartupPath + @"\Setting.ini");
                 label_nowLocation.Text = "현재 위치: " + FIFA4_Location;
+                FileInfo check_FIFA4EXE = new FileInfo(FIFA4_Location + "\\fifa4zf.exe");
+
+                //있을때
+                if (check_FIFA4EXE.Exists)
+                {
+                    label_checkFIFA4.Text = "현재 경로 확인: FIFA4 파일 확인.";
+                    label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Green;
+                }
+                else
+                {
+                    label_checkFIFA4.Text = "현재 경로 확인: FIFA4 파일 없음.";
+                    label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Red;
+                }
             }
         }
 
@@ -391,6 +498,28 @@ namespace FIFA4_Miniface_Changer
                 label_After_Name.Text = openFileDialog.SafeFileName;
                 after_Check = true;
             }
+        }
+
+        private void button_MiniFace_Click(object sender, EventArgs e)
+        {
+            if(miniFace_Save == false)
+            {
+                this.Size = new Size(739, 662);
+                miniFace_Save = true;
+                label_MiniFace_Name.Text = listbox_Character.Items[listbox_Character.SelectedIndex].ToString();
+            }
+            else
+            {
+                this.Size = new Size(739, 414);
+                miniFace_Save = false;
+            }
+        }
+
+        private void listbox_MiniFace_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(listbox_MiniFace.SelectedIndex);
+            picturebox_MiniFace.ImageLocation = "http://127.0.0.1/static/img/" + miniface_Location[listbox_MiniFace.SelectedIndex].ToString();
+            Console.WriteLine(picturebox_MiniFace.ImageLocation);
         }
     }
 }

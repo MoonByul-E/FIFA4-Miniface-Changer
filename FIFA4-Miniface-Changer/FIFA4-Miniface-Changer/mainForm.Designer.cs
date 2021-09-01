@@ -42,13 +42,21 @@ namespace FIFA4_Miniface_Changer
             this.picturebox_After = new System.Windows.Forms.PictureBox();
             this.button_Change = new MetroFramework.Controls.MetroButton();
             this.button_After_Open = new MetroFramework.Controls.MetroButton();
-            this.label_Author = new MetroFramework.Controls.MetroLabel();
             this.label_Name = new MetroFramework.Controls.MetroLabel();
             this.picturebox_Season = new System.Windows.Forms.PictureBox();
             this.label_After_Name = new MetroFramework.Controls.MetroLabel();
+            this.button_MiniFace = new MetroFramework.Controls.MetroButton();
+            this.label_checkFIFA4 = new MetroFramework.Controls.MetroLabel();
+            this.listbox_MiniFace = new System.Windows.Forms.ListBox();
+            this.label_MiniFace_Name = new MetroFramework.Controls.MetroLabel();
+            this.picturebox_MiniFace = new System.Windows.Forms.PictureBox();
+            this.button_MiniFace_Select = new MetroFramework.Controls.MetroButton();
+            this.button_MiniFace_Report = new MetroFramework.Controls.MetroButton();
+            this.button_MiniFace_Upload = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Before)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturebox_MiniFace)).BeginInit();
             this.SuspendLayout();
             // 
             // listbox_Character
@@ -84,12 +92,13 @@ namespace FIFA4_Miniface_Changer
             this.picturebox_Before.Location = new System.Drawing.Point(373, 150);
             this.picturebox_Before.Name = "picturebox_Before";
             this.picturebox_Before.Size = new System.Drawing.Size(128, 128);
+            this.picturebox_Before.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picturebox_Before.TabIndex = 3;
             this.picturebox_Before.TabStop = false;
             // 
             // button_changeLocation
             // 
-            this.button_changeLocation.Location = new System.Drawing.Point(23, 336);
+            this.button_changeLocation.Location = new System.Drawing.Point(23, 339);
             this.button_changeLocation.Name = "button_changeLocation";
             this.button_changeLocation.Size = new System.Drawing.Size(75, 23);
             this.button_changeLocation.TabIndex = 4;
@@ -99,7 +108,7 @@ namespace FIFA4_Miniface_Changer
             // label_nowLocation
             // 
             this.label_nowLocation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_nowLocation.Location = new System.Drawing.Point(23, 310);
+            this.label_nowLocation.Location = new System.Drawing.Point(23, 313);
             this.label_nowLocation.Name = "label_nowLocation";
             this.label_nowLocation.Size = new System.Drawing.Size(478, 23);
             this.label_nowLocation.TabIndex = 5;
@@ -149,6 +158,7 @@ namespace FIFA4_Miniface_Changer
             this.picturebox_After.Location = new System.Drawing.Point(588, 150);
             this.picturebox_After.Name = "picturebox_After";
             this.picturebox_After.Size = new System.Drawing.Size(128, 128);
+            this.picturebox_After.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picturebox_After.TabIndex = 8;
             this.picturebox_After.TabStop = false;
             // 
@@ -169,17 +179,6 @@ namespace FIFA4_Miniface_Changer
             this.button_After_Open.TabIndex = 12;
             this.button_After_Open.Text = "미페 블러오기";
             this.button_After_Open.Click += new System.EventHandler(this.button_After_Open_Click);
-            // 
-            // label_Author
-            // 
-            this.label_Author.AutoSize = true;
-            this.label_Author.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.label_Author.Location = new System.Drawing.Point(23, 362);
-            this.label_Author.Name = "label_Author";
-            this.label_Author.Size = new System.Drawing.Size(128, 19);
-            this.label_Author.TabIndex = 13;
-            this.label_Author.Text = "제작자: 마마문별이";
-            this.label_Author.UseStyleColors = true;
             // 
             // label_Name
             // 
@@ -208,15 +207,95 @@ namespace FIFA4_Miniface_Changer
             this.label_After_Name.TabIndex = 16;
             this.label_After_Name.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // button_MiniFace
+            // 
+            this.button_MiniFace.Location = new System.Drawing.Point(23, 368);
+            this.button_MiniFace.Name = "button_MiniFace";
+            this.button_MiniFace.Size = new System.Drawing.Size(75, 23);
+            this.button_MiniFace.TabIndex = 17;
+            this.button_MiniFace.Text = "미페 저장소";
+            this.button_MiniFace.Visible = false;
+            this.button_MiniFace.Click += new System.EventHandler(this.button_MiniFace_Click);
+            // 
+            // label_checkFIFA4
+            // 
+            this.label_checkFIFA4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_checkFIFA4.Location = new System.Drawing.Point(104, 339);
+            this.label_checkFIFA4.Name = "label_checkFIFA4";
+            this.label_checkFIFA4.Size = new System.Drawing.Size(226, 23);
+            this.label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Red;
+            this.label_checkFIFA4.TabIndex = 18;
+            this.label_checkFIFA4.Text = "FIFA4 위치 확인: ";
+            this.label_checkFIFA4.UseStyleColors = true;
+            // 
+            // listbox_MiniFace
+            // 
+            this.listbox_MiniFace.FormattingEnabled = true;
+            this.listbox_MiniFace.ItemHeight = 12;
+            this.listbox_MiniFace.Location = new System.Drawing.Point(23, 440);
+            this.listbox_MiniFace.Name = "listbox_MiniFace";
+            this.listbox_MiniFace.Size = new System.Drawing.Size(559, 208);
+            this.listbox_MiniFace.TabIndex = 19;
+            this.listbox_MiniFace.SelectedIndexChanged += new System.EventHandler(this.listbox_MiniFace_SelectedIndexChanged);
+            // 
+            // label_MiniFace_Name
+            // 
+            this.label_MiniFace_Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_MiniFace_Name.Location = new System.Drawing.Point(23, 414);
+            this.label_MiniFace_Name.Name = "label_MiniFace_Name";
+            this.label_MiniFace_Name.Size = new System.Drawing.Size(693, 23);
+            this.label_MiniFace_Name.TabIndex = 20;
+            // 
+            // picturebox_MiniFace
+            // 
+            this.picturebox_MiniFace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picturebox_MiniFace.Location = new System.Drawing.Point(588, 440);
+            this.picturebox_MiniFace.Name = "picturebox_MiniFace";
+            this.picturebox_MiniFace.Size = new System.Drawing.Size(128, 128);
+            this.picturebox_MiniFace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picturebox_MiniFace.TabIndex = 21;
+            this.picturebox_MiniFace.TabStop = false;
+            // 
+            // button_MiniFace_Select
+            // 
+            this.button_MiniFace_Select.Location = new System.Drawing.Point(588, 574);
+            this.button_MiniFace_Select.Name = "button_MiniFace_Select";
+            this.button_MiniFace_Select.Size = new System.Drawing.Size(128, 23);
+            this.button_MiniFace_Select.TabIndex = 22;
+            this.button_MiniFace_Select.Text = "미페 선택";
+            // 
+            // button_MiniFace_Report
+            // 
+            this.button_MiniFace_Report.Location = new System.Drawing.Point(588, 603);
+            this.button_MiniFace_Report.Name = "button_MiniFace_Report";
+            this.button_MiniFace_Report.Size = new System.Drawing.Size(128, 23);
+            this.button_MiniFace_Report.TabIndex = 23;
+            this.button_MiniFace_Report.Text = "미페 신고";
+            // 
+            // button_MiniFace_Upload
+            // 
+            this.button_MiniFace_Upload.Location = new System.Drawing.Point(588, 632);
+            this.button_MiniFace_Upload.Name = "button_MiniFace_Upload";
+            this.button_MiniFace_Upload.Size = new System.Drawing.Size(128, 23);
+            this.button_MiniFace_Upload.TabIndex = 24;
+            this.button_MiniFace_Upload.Text = "미페 등록";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 382);
+            this.ClientSize = new System.Drawing.Size(900, 678);
+            this.Controls.Add(this.button_MiniFace_Upload);
+            this.Controls.Add(this.button_MiniFace_Report);
+            this.Controls.Add(this.button_MiniFace_Select);
+            this.Controls.Add(this.picturebox_MiniFace);
+            this.Controls.Add(this.label_MiniFace_Name);
+            this.Controls.Add(this.listbox_MiniFace);
+            this.Controls.Add(this.label_checkFIFA4);
+            this.Controls.Add(this.button_MiniFace);
             this.Controls.Add(this.label_After_Name);
             this.Controls.Add(this.picturebox_Season);
             this.Controls.Add(this.label_Name);
-            this.Controls.Add(this.label_Author);
             this.Controls.Add(this.button_After_Open);
             this.Controls.Add(this.button_Change);
             this.Controls.Add(this.label_After);
@@ -238,8 +317,8 @@ namespace FIFA4_Miniface_Changer
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Before)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_After)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturebox_MiniFace)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -258,9 +337,16 @@ namespace FIFA4_Miniface_Changer
         private System.Windows.Forms.PictureBox picturebox_After;
         private MetroFramework.Controls.MetroButton button_Change;
         private MetroFramework.Controls.MetroButton button_After_Open;
-        private MetroFramework.Controls.MetroLabel label_Author;
         private MetroFramework.Controls.MetroLabel label_Name;
         private System.Windows.Forms.PictureBox picturebox_Season;
         private MetroFramework.Controls.MetroLabel label_After_Name;
+        private MetroFramework.Controls.MetroButton button_MiniFace;
+        private MetroFramework.Controls.MetroLabel label_checkFIFA4;
+        private System.Windows.Forms.ListBox listbox_MiniFace;
+        private MetroFramework.Controls.MetroLabel label_MiniFace_Name;
+        private System.Windows.Forms.PictureBox picturebox_MiniFace;
+        private MetroFramework.Controls.MetroButton button_MiniFace_Select;
+        private MetroFramework.Controls.MetroButton button_MiniFace_Report;
+        private MetroFramework.Controls.MetroButton button_MiniFace_Upload;
     }
 }
