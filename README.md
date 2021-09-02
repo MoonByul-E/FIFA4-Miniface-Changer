@@ -1,3 +1,6 @@
+프로그램 실행 이미지
+![FIFA4 MiniFace Changer](https://user-images.githubusercontent.com/76688911/131929735-00d3cf40-7f97-47b4-8434-d91916393de1.PNG)
+
 - 2021/08/28
   - 프로젝트 생성
 
