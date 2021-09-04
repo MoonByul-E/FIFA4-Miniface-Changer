@@ -30,3 +30,5 @@ C:\Users\parks\Desktop\개인\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA
 C:\Users\parks\Desktop\개인\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Release\FIFA4-Miniface-Changer.exe.config
 C:\Users\parks\Desktop\개인\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Release\FIFA4-Miniface-Changer.csproj.Fody.CopyLocal.cache
 C:\Users\parks\Desktop\개인\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Release\FIFA4-Miniface-Changer.csproj.CopyComplete
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Release\FIFA4-Miniface-Changer.exe.config
+C:\Develop\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\FIFA4-Miniface-Changer\obj\Release\FIFA4_Miniface_Changer.Login.resources

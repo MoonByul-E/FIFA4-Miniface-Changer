@@ -95,12 +95,29 @@ namespace FIFA4_Miniface_Changer
             listbox_Character.SelectedIndex = 0;
         }
 
+        public JObject getServer(string URL) //URL의 API를 구해옵니다.
+        {
+            //Get Data
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(URL);
+            HttpWebResponse Response = (HttpWebResponse)Request.GetResponse();
+
+            //Encoding
+            Stream Stream = Response.GetResponseStream();
+            StreamReader Reader = new StreamReader(Stream, Encoding.UTF8);
+            string Text = Reader.ReadToEnd();
+
+            JObject Object = JObject.Parse(Text);
+            Console.WriteLine(Object);
+
+            return Object;
+        }
+
         private void mainForm_Load(object sender, EventArgs e) //메인폼 로딩시 실행
         {
             StringBuilder fileLocation = new StringBuilder();
             GetPrivateProfileString("FILE", "LOCATION", FIFA4_Location, fileLocation, 1000, Application.StartupPath + @"\Setting.ini"); //Setting.ini에서 저장된 경로 확인
             FIFA4_Location = fileLocation.ToString();
-            this.Size = new Size(900, 414);
+            this.Size = new Size(739, 414);
             label_nowLocation.Text = "현재 위치: " + FIFA4_Location;
             FileInfo check_FIFA4EXE = new FileInfo(FIFA4_Location + "\\fifa4zf.exe"); //FIFA4 폴더가 맞는지 확인
 
@@ -157,11 +174,6 @@ namespace FIFA4_Miniface_Changer
                     updateForm UpdateForm = new updateForm();
                     UpdateForm.ShowDialog(); //업데이트 알림창을 띄운다
                 }
-
-                Controls.Add(bannerAds); //배너 광고 추가
-                bannerAds.Location = new Point(740, 30);
-                bannerAds.ShowAd(160, 600, "bamd4f0pc0ns");
-                bannerAds.Size = new Size(160, 350);
             }
             catch(Exception ex)
             {
@@ -496,11 +508,274 @@ namespace FIFA4_Miniface_Changer
             }
         }
 
+        private void Visible_MainForm(bool Visible)
+        {
+            //검색 부분
+            textbox_Search.Visible = Visible;
+            button_Search.Visible = Visible;
+            listbox_Character.Visible = Visible;
+
+            //변경전 부분
+            label_Before.Visible = Visible;
+            picturebox_Season.Visible = Visible;
+            label_Name.Visible = Visible;
+            picturebox_Before.Visible = Visible;
+            button_Before.Visible = Visible;
+
+            //변경후 부분
+            label_After.Visible = Visible;
+            label_After_Name.Visible = Visible;
+            picturebox_After.Visible = Visible;
+            button_After.Visible = Visible;
+            button_After_Open.Visible = Visible;
+
+            //변경
+            button_Change.Visible = Visible;
+
+            //피파 위치
+            label_nowLocation.Visible = Visible;
+            button_changeLocation.Visible = Visible;
+            label_checkFIFA4.Visible = Visible;
+
+            //미페 저장소
+            button_MiniFace.Visible = Visible;
+
+            //로그인 버튼
+            button_Login.Visible = Visible;
+        }
+
+        private void Visible_Login(bool Visible)
+        {
+            //로그인
+            tabControl_Login.Location = new Point(23, 63);
+            tabControl_Login.Visible = Visible;
+
+            //닫기 버튼
+            button_Login_Close.Location = new Point(641, 63);
+            button_Login_Close.Visible = Visible;
+        }
+
         private void button_Login_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.ShowDialog();
-            metroLabel1.Text = Token;
+            Visible_MainForm(false);
+            Visible_Login(true);
+
+            tabControl_Login.SelectedIndex = 0;
+
+            textBox_Login_ID.Text = "";
+            textBox_Login_PW.Text = "";
+
+            textBox_Register_ID.Text = "";
+            textBox_Register_PW.Text = "";
+            textBox_Register_REPW.Text = "";
+            textBox_Register_EMail.Text = "";
+
+            textBox_IDSearch_EMail.Text = "";
+
+            textBox_PWChange_ID.Text = "";
+            textBox_PWChange_EMail.Text = "";
+            textBox_PWChange_NEWPW.Text = "";
+            textBox_PWChange_RENEWPW.Text = "";
         }
+
+        private void button_Login_Close_Click(object sender, EventArgs e)
+        {
+            Visible_Login(false);
+            Visible_MainForm(true);
+        }
+
+        private void button_Login_Login_Click(object sender, EventArgs e)
+        {
+            if (textBox_Login_ID.Text == "") // 로그인 아이디가 비어있을때
+            {
+                MessageBox.Show("아이디를 입력해 주세요.", "Error");
+                textBox_Login_ID.Focus();
+            }
+            else if (textBox_Login_PW.Text == "") // 로그인 비밀번호가 비어있을때
+            {
+                MessageBox.Show("비밀번호를 입력해 주세요.", "Error");
+                textBox_Login_PW.Focus();
+            }
+            else // 둘다 입력됬을때
+            {
+                JObject Result = getServer("http://127.0.0.1:7777/login/login?ID=" + textBox_Login_ID.Text + "&PW=" + textBox_Login_PW.Text);
+
+                if (Result["Result"].ToString() == "ID Error" || Result["Result"].ToString() == "PW Error") // 아이디를 찾을수 없을때 또는 비밀번호가 일치하지 않을때
+                {
+                    MessageBox.Show("아이디가 존재하지 않거나, 비밀번호가 맞지 않습니다.", "Error");
+                    textBox_Login_ID.Focus();
+                }
+                else // 로그인 성공
+                {
+                    Token = Result["Token"].ToString();
+                    Console.WriteLine(Token);
+
+                    //메인 화면으로
+                    Visible_Login(false);
+                    Visible_MainForm(true);
+
+                    //메인화면 로그인 버튼 숨기기
+                    button_Login.Visible = false;
+                    //메인화면 로그아웃 버튼 보이기
+                    button_Logout.Visible = true;
+                    //메인화면 로그아웃 위치 옮기기
+                    button_Logout.Location = new Point(641, 63);
+                    //메인화면 사용자 이름 표시
+                    label_UserName.Text = "사용자: " + getServer("http://127.0.0.1:7777/login/getid?Token=" + Token)["ID"].ToString();
+                    label_UserName.Location = new Point(button_Login.Location.X - label_UserName.Size.Width, button_Login.Location.Y);
+                }
+            }
+        }
+
+        private void button_Register_Click(object sender, EventArgs e)
+        {
+            if(textBox_Register_ID.Text == "")
+            {
+                MessageBox.Show("아이디를 입력해 주세요.", "Error");
+                textBox_Register_ID.Focus();
+            }
+            else if(textBox_Register_PW.Text == "")
+            {
+                MessageBox.Show("비밀번호를 입력해 주세요.", "Error");
+                textBox_Register_PW.Focus();
+            }
+            else if (textBox_Register_REPW.Text == "")
+            {
+                MessageBox.Show("비밀번호를 다시 입력해 주세요.", "Error");
+                textBox_Register_REPW.Focus();
+            }
+            else if (textBox_Register_EMail.Text == "")
+            {
+                MessageBox.Show("이메일을 다시 입력해 주세요.", "Error");
+                textBox_Register_EMail.Focus();
+            }
+            else if(textBox_Register_PW.Text != textBox_Register_REPW.Text)
+            {
+                MessageBox.Show("비밀번호가 일치하지 않습니다.", "Error");
+                textBox_Register_REPW.Focus();
+            }
+            else
+            {
+                JObject Result = getServer("http://127.0.0.1:7777/login/register?ID=" + textBox_Register_ID.Text + "&PW=" + textBox_Register_PW.Text + "&EMail=" + textBox_Register_EMail.Text);
+                if (Result["Result"].ToString() == "ID Overlap")
+                {
+                    MessageBox.Show("이미 사용중인 아이디 입니다.", "Error");
+                    textBox_Register_ID.Focus();
+                }
+                else if (Result["Result"].ToString() == "EMail Overlap")
+                {
+                    MessageBox.Show("이미 사용중인 이메일 입니다.", "Error");
+                    textBox_Register_EMail.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("회원가입이 완료됬습니다.", "Success");
+
+                    textBox_Register_ID.Text = "";
+                    textBox_Register_PW.Text = "";
+                    textBox_Register_REPW.Text = "";
+                    textBox_Register_EMail.Text = "";
+
+                    tabControl_Login.SelectedIndex = 0;
+
+                }
+            }
+        }
+
+        private void button_IDSearch_Click(object sender, EventArgs e)
+        {
+            if (textBox_IDSearch_EMail.Text == "")
+            {
+                MessageBox.Show("이메일을 입력해 주세요.", "Error");
+                textBox_IDSearch_EMail.Focus();
+            }
+            else
+            {
+                JObject Result = getServer("http://127.0.0.1:7777/login/idsearch?EMail=" + textBox_IDSearch_EMail.Text);
+
+                if(Result["Result"].ToString() == "EMail Error")
+                {
+                    MessageBox.Show("이메일을 찾을 수 없습니다.", "Error");
+                    textBox_IDSearch_EMail.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("입력하신 이메일로 아이디를 전송했습니다.", "Success");
+
+                    textBox_IDSearch_EMail.Text = "";
+
+                    tabControl_Login.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void button_PWChange_Click(object sender, EventArgs e)
+        {
+            if (textBox_PWChange_ID.Text == "")
+            {
+                MessageBox.Show("아이디를 입력해 주세요.", "Error");
+                textBox_PWChange_ID.Focus();
+            }
+            else if (textBox_PWChange_EMail.Text == "")
+            {
+                MessageBox.Show("이메일을 입력해 주세요.", "Error");
+                textBox_PWChange_EMail.Focus();
+            }
+            else if (textBox_PWChange_NEWPW.Text == "")
+            {
+                MessageBox.Show("새로운 비밀번호를 입력해 주세요.", "Error");
+                textBox_PWChange_NEWPW.Focus();
+            }
+            else if (textBox_PWChange_RENEWPW.Text == "")
+            {
+                MessageBox.Show("새로운 비밀번호를 다시 입력해 주세요.", "Error");
+                textBox_PWChange_RENEWPW.Focus();
+            }
+            else if (textBox_PWChange_NEWPW.Text != textBox_PWChange_RENEWPW.Text)
+            {
+                MessageBox.Show("비밀번호가 일치하지 않습니다", "Error");
+                textBox_PWChange_RENEWPW.Focus();
+            }
+            else
+            {
+                JObject Result = getServer("http://127.0.0.1:7777/login/pwchange?ID=" + textBox_PWChange_ID.Text + "&EMail=" + textBox_PWChange_EMail.Text + "&NewPW=" + textBox_PWChange_NEWPW.Text);
+
+                if(Result["Result"].ToString() == "EMail Error")
+                {
+                    MessageBox.Show("이메일을 찾을 수 없습니다.", "Error");
+                    textBox_PWChange_EMail.Focus();
+                }
+                else if (Result["Result"].ToString() == "ID Error")
+                {
+                    MessageBox.Show("아이디를 찾을 수 없습니다.", "Error");
+                    textBox_PWChange_ID.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("비밀번호가 변경 되었습니다.", "Success");
+
+                    textBox_PWChange_ID.Text = "";
+                    textBox_PWChange_EMail.Text = "";
+                    textBox_PWChange_NEWPW.Text = "";
+                    textBox_PWChange_RENEWPW.Text = "";
+
+                    tabControl_Login.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void button_Logout_Click(object sender, EventArgs e) //로그아웃 클릭시
+        {
+            //토큰 지우기
+            Token = "";
+            //메인화면 로그인 버튼 보이기
+            button_Login.Visible = true;
+            //메인화면 로그아웃 버튼 숨기기
+            button_Logout.Visible = false;
+            //메인화면 사용자 이름 숨기기
+            label_UserName.Visible = false;
+        }
+
+        
     }
 }

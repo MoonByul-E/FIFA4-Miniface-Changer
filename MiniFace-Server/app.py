@@ -50,7 +50,7 @@ def function_main(Code):
 
 @app.route("/upload/<Code>/<No>")
 def function_upload():
-    return "A"
+    return "A   "
 
 if __name__ == "__main__":
     app.run(host = "127.0.0.1", port = 80)  
