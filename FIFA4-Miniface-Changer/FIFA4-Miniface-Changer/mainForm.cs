@@ -44,6 +44,8 @@ namespace FIFA4_Miniface_Changer
         bool after_Check = false;
         bool miniFace_Save = false;
 
+        public string Token;
+
         public mainForm()
         {
             InitializeComponent();
@@ -492,6 +494,13 @@ namespace FIFA4_Miniface_Changer
                     listbox_MiniFace.EndUpdate(); //미페 저장소 listBox 업데이트를 끝낸다.
                 }
             }
+        }
+
+        private void button_Login_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.ShowDialog();
+            metroLabel1.Text = Token;
         }
     }
 }

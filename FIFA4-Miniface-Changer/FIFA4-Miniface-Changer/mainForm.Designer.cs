@@ -53,6 +53,8 @@ namespace FIFA4_Miniface_Changer
             this.button_MiniFace_Select = new MetroFramework.Controls.MetroButton();
             this.button_MiniFace_Report = new MetroFramework.Controls.MetroButton();
             this.button_MiniFace_Upload = new MetroFramework.Controls.MetroButton();
+            this.button_Login = new MetroFramework.Controls.MetroButton();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Before)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).BeginInit();
@@ -280,11 +282,31 @@ namespace FIFA4_Miniface_Changer
             this.button_MiniFace_Upload.TabIndex = 24;
             this.button_MiniFace_Upload.Text = "미페 등록";
             // 
+            // button_Login
+            // 
+            this.button_Login.Location = new System.Drawing.Point(641, 63);
+            this.button_Login.Name = "button_Login";
+            this.button_Login.Size = new System.Drawing.Size(75, 23);
+            this.button_Login.TabIndex = 25;
+            this.button_Login.Text = "로그인";
+            this.button_Login.Click += new System.EventHandler(this.button_Login_Click);
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(373, 63);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(81, 19);
+            this.metroLabel1.TabIndex = 26;
+            this.metroLabel1.Text = "metroLabel1";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 678);
+            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(this.button_Login);
             this.Controls.Add(this.button_MiniFace_Upload);
             this.Controls.Add(this.button_MiniFace_Report);
             this.Controls.Add(this.button_MiniFace_Select);
@@ -319,6 +341,7 @@ namespace FIFA4_Miniface_Changer
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_MiniFace)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -348,5 +371,7 @@ namespace FIFA4_Miniface_Changer
         private MetroFramework.Controls.MetroButton button_MiniFace_Select;
         private MetroFramework.Controls.MetroButton button_MiniFace_Report;
         private MetroFramework.Controls.MetroButton button_MiniFace_Upload;
+        private MetroFramework.Controls.MetroButton button_Login;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }
