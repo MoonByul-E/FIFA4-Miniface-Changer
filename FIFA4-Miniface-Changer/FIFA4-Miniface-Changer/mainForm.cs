@@ -445,21 +445,6 @@ namespace FIFA4_Miniface_Changer
             }
         }
 
-        private void button_MiniFace_Click(object sender, EventArgs e) //미페 저장소 버튼 클릭
-        {
-            if(miniFace_Save == false) //미페 저장소가 켜져 있지 않았으면
-            {
-                this.Size = new Size(739, 662); //메인폼의 사이즈를 키운다
-                miniFace_Save = true; //미페 저장소를 활성화 한다
-                label_MiniFace_Name.Text = listbox_Character.Items[listbox_Character.SelectedIndex].ToString(); //미페 저장소의 이름을 현재 선택된 선수의 이름으로 띄운다.
-            }
-            else //미페 저장소가 켜져 있으면
-            {
-                this.Size = new Size(739, 414); //메인폼의 사이즈를 줄인다
-                miniFace_Save = false; //미페 저장소를 비활성화 한다
-            }
-        }
-
         private void listbox_MiniFace_SelectedIndexChanged(object sender, EventArgs e) //미페 저장소의 listBox의 선택이 바뀌면
         {
             Console.WriteLine(listbox_MiniFace.SelectedIndex);
@@ -776,6 +761,60 @@ namespace FIFA4_Miniface_Changer
             label_UserName.Visible = false;
         }
 
-        
+        private void MiniFace_Main_Visible(bool Visible)
+        {
+            //변경전 부분
+            label_Before.Visible = Visible;
+            picturebox_Season.Visible = Visible;
+            label_Name.Visible = Visible;
+            picturebox_Before.Visible = Visible;
+            button_Before.Visible = Visible;
+
+            //변경후 부분
+            label_After.Visible = Visible;
+            label_After_Name.Visible = Visible;
+            picturebox_After.Visible = Visible;
+            button_After.Visible = Visible;
+            button_After_Open.Visible = Visible;
+
+            //변경
+            button_Change.Visible = Visible;
+
+            //미페 저장소
+            button_MiniFace.Visible = Visible;
+        }
+
+        private void MiniFace_Visible(bool Visible)
+        {
+            label_MiniFace_Name.Visible = Visible;
+            listbox_MiniFace.Visible = Visible;
+            picturebox_MiniFace.Visible = Visible;
+            button_MiniFace_Select.Visible = Visible;
+            button_MiniFace_Report.Visible = Visible;
+            button_MiniFace_Upload.Visible = Visible;
+            button_MiniFace_Close.Visible = Visible;
+        }
+
+        private void button_MiniFace_Click(object sender, EventArgs e) //미페 저장소 버튼 클릭
+        {
+            MiniFace_Main_Visible(false);
+            MiniFace_Visible(true);
+
+            label_MiniFace_Name.Location = new Point(373, 97);
+            listbox_MiniFace.Location = new Point(373, 123);
+            picturebox_MiniFace.Location = new Point(588, 123);
+            button_MiniFace_Select.Location = new Point(588, 257);
+            button_MiniFace_Report.Location = new Point(588, 286);
+            button_MiniFace_Upload.Location = new Point(588, 315);
+            button_MiniFace_Close.Location = new Point(22, 372);
+            button_MiniFace_Player.Location = new Point(507, 315);
+            
+        }
+
+        private void button_MiniFace_Close_Click(object sender, EventArgs e)
+        {
+            MiniFace_Visible(false);
+            MiniFace_Main_Visible(true);
+        }
     }
 }

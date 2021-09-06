@@ -89,6 +89,8 @@ namespace FIFA4_Miniface_Changer
             this.label_PWChange_EMail = new MetroFramework.Controls.MetroLabel();
             this.button_Logout = new MetroFramework.Controls.MetroButton();
             this.label_UserName = new MetroFramework.Controls.MetroLabel();
+            this.button_MiniFace_Close = new MetroFramework.Controls.MetroButton();
+            this.button_MiniFace_Player = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Before)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturebox_Season)).BeginInit();
@@ -139,7 +141,7 @@ namespace FIFA4_Miniface_Changer
             // 
             // button_changeLocation
             // 
-            this.button_changeLocation.Location = new System.Drawing.Point(23, 339);
+            this.button_changeLocation.Location = new System.Drawing.Point(22, 343);
             this.button_changeLocation.Name = "button_changeLocation";
             this.button_changeLocation.Size = new System.Drawing.Size(75, 23);
             this.button_changeLocation.TabIndex = 4;
@@ -149,7 +151,7 @@ namespace FIFA4_Miniface_Changer
             // label_nowLocation
             // 
             this.label_nowLocation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_nowLocation.Location = new System.Drawing.Point(23, 313);
+            this.label_nowLocation.Location = new System.Drawing.Point(23, 315);
             this.label_nowLocation.Name = "label_nowLocation";
             this.label_nowLocation.Size = new System.Drawing.Size(478, 23);
             this.label_nowLocation.TabIndex = 5;
@@ -196,7 +198,7 @@ namespace FIFA4_Miniface_Changer
             // picturebox_After
             // 
             this.picturebox_After.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picturebox_After.Location = new System.Drawing.Point(588, 141);
+            this.picturebox_After.Location = new System.Drawing.Point(588, 150);
             this.picturebox_After.Name = "picturebox_After";
             this.picturebox_After.Size = new System.Drawing.Size(128, 128);
             this.picturebox_After.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -250,18 +252,17 @@ namespace FIFA4_Miniface_Changer
             // 
             // button_MiniFace
             // 
-            this.button_MiniFace.Location = new System.Drawing.Point(23, 368);
+            this.button_MiniFace.Location = new System.Drawing.Point(22, 372);
             this.button_MiniFace.Name = "button_MiniFace";
             this.button_MiniFace.Size = new System.Drawing.Size(75, 23);
             this.button_MiniFace.TabIndex = 17;
             this.button_MiniFace.Text = "미페 저장소";
-            this.button_MiniFace.Visible = false;
             this.button_MiniFace.Click += new System.EventHandler(this.button_MiniFace_Click);
             // 
             // label_checkFIFA4
             // 
             this.label_checkFIFA4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_checkFIFA4.Location = new System.Drawing.Point(104, 339);
+            this.label_checkFIFA4.Location = new System.Drawing.Point(103, 343);
             this.label_checkFIFA4.Name = "label_checkFIFA4";
             this.label_checkFIFA4.Size = new System.Drawing.Size(226, 23);
             this.label_checkFIFA4.Style = MetroFramework.MetroColorStyle.Red;
@@ -273,18 +274,18 @@ namespace FIFA4_Miniface_Changer
             // 
             this.listbox_MiniFace.FormattingEnabled = true;
             this.listbox_MiniFace.ItemHeight = 12;
-            this.listbox_MiniFace.Location = new System.Drawing.Point(23, 440);
+            this.listbox_MiniFace.Location = new System.Drawing.Point(373, 440);
             this.listbox_MiniFace.Name = "listbox_MiniFace";
-            this.listbox_MiniFace.Size = new System.Drawing.Size(559, 208);
+            this.listbox_MiniFace.Size = new System.Drawing.Size(209, 184);
             this.listbox_MiniFace.TabIndex = 19;
             this.listbox_MiniFace.SelectedIndexChanged += new System.EventHandler(this.listbox_MiniFace_SelectedIndexChanged);
             // 
             // label_MiniFace_Name
             // 
             this.label_MiniFace_Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_MiniFace_Name.Location = new System.Drawing.Point(23, 414);
+            this.label_MiniFace_Name.Location = new System.Drawing.Point(373, 414);
             this.label_MiniFace_Name.Name = "label_MiniFace_Name";
-            this.label_MiniFace_Name.Size = new System.Drawing.Size(693, 23);
+            this.label_MiniFace_Name.Size = new System.Drawing.Size(343, 23);
             this.label_MiniFace_Name.TabIndex = 20;
             // 
             // picturebox_MiniFace
@@ -343,9 +344,9 @@ namespace FIFA4_Miniface_Changer
             // tabControl_Login
             // 
             this.tabControl_Login.Controls.Add(this.tabPage_Login);
+            this.tabControl_Login.Controls.Add(this.tabPage_PWChange);
             this.tabControl_Login.Controls.Add(this.tabPage_Register);
             this.tabControl_Login.Controls.Add(this.tabPage_IDSearch);
-            this.tabControl_Login.Controls.Add(this.tabPage_PWChange);
             this.tabControl_Login.Location = new System.Drawing.Point(794, 63);
             this.tabControl_Login.Name = "tabControl_Login";
             this.tabControl_Login.SelectedIndex = 3;
@@ -665,11 +666,31 @@ namespace FIFA4_Miniface_Changer
             this.label_UserName.TabIndex = 29;
             this.label_UserName.Text = "label_UserName";
             // 
+            // button_MiniFace_Close
+            // 
+            this.button_MiniFace_Close.Location = new System.Drawing.Point(23, 632);
+            this.button_MiniFace_Close.Name = "button_MiniFace_Close";
+            this.button_MiniFace_Close.Size = new System.Drawing.Size(75, 23);
+            this.button_MiniFace_Close.TabIndex = 30;
+            this.button_MiniFace_Close.Text = "뒤로";
+            this.button_MiniFace_Close.Visible = false;
+            this.button_MiniFace_Close.Click += new System.EventHandler(this.button_MiniFace_Close_Click);
+            // 
+            // button_MiniFace_Player
+            // 
+            this.button_MiniFace_Player.Location = new System.Drawing.Point(507, 632);
+            this.button_MiniFace_Player.Name = "button_MiniFace_Player";
+            this.button_MiniFace_Player.Size = new System.Drawing.Size(75, 23);
+            this.button_MiniFace_Player.TabIndex = 31;
+            this.button_MiniFace_Player.Text = "선수 선택";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 678);
+            this.Controls.Add(this.button_MiniFace_Player);
+            this.Controls.Add(this.button_MiniFace_Close);
             this.Controls.Add(this.label_UserName);
             this.Controls.Add(this.button_Logout);
             this.Controls.Add(this.tabControl_Login);
@@ -784,5 +805,7 @@ namespace FIFA4_Miniface_Changer
         private MetroFramework.Controls.MetroLabel label_PWChange_EMail;
         private MetroFramework.Controls.MetroButton button_Logout;
         private MetroFramework.Controls.MetroLabel label_UserName;
+        private MetroFramework.Controls.MetroButton button_MiniFace_Close;
+        private MetroFramework.Controls.MetroButton button_MiniFace_Player;
     }
 }
